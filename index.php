@@ -20,5 +20,5 @@ if ($conn->connect_error) {
 echo "MySQL Database and PHP Connected successfully"; 
 // Display success message if the connection is successful
 
-$conn->close(); 
 // Closing the database connection
+$conn->close(); 
