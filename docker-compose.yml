@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  #  container to serve PHP to the web
+  simple-php-app:
+    container_name: simple-php-app
+    # Docker Image Build Context
+    build:
+      context: .
+      # path to ext.dockerfile 
+      dockerfile: Dockerfile
+    volumes:
+      # Mount local directory to container's web root
+      - .:/var/www/html
+      # Map host port 8000 to container port 80
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql-db
+
+  # db service
+  mysql-db:
+    image: mysql:8.0
+    environment:
+      # Set root password
+      MYSQL_ROOT_PASSWORD: password
+      # Create a database named 'test_db'
+      MYSQL_DATABASE: test_db
+      # Create a MySQL user 'test_user'
+      MYSQL_USER: test_user
+      # Set password for 'test_user'
+      MYSQL_PASSWORD: db_user_pass
+    ports:
+      # Expose MySQL default port
+      - "3306:3306"
+
+  #   jenkins:
+  #     image: jenkins/jenkins
+  #     container_name: my-jenkins-app
+  #     ports:
+  #       - "8080:8080"
+  #       - "50000:50000"
+  #     volumes:
+  #       - "jenkins_home:/var/jenkins_home"
+  # volumes:
+  #   jenkins_home:
